@@ -5,12 +5,14 @@ import sqlite3
 df = pd.read_excel('Especies.xlsx')
 
 # Criar uma conexão SQLite
-conn = sqlite3.connect('bd-museu-goeldi.db')
+conn = sqlite3.connect('bd_museu_goeldi.db')
+
+# df.to_sql('bd_museu_goeldi', conn, if_exists='replace', index=False)
 
 # Escrever os dados do DataFrame para uma tabela SQLite
-df.to_sql('especies', conn, if_exists='replace', index=False)
+query = pd.read_sql_query("SELECT Bacia FROM bd_museu_goeldi", conn)
 
 # Fechar a conexão
 conn.close()
 
-print(df)
+print(query)
