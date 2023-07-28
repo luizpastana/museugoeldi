@@ -26,7 +26,7 @@ with engine.connect() as connection:
 
 @app.route('/api/bd_museu_goeldi', methods=['GET'])
 def get_names():
-    return t[0]
+    return dict_names
 
 
 @app.route('/api/bd_museu_goeldi/especies', methods=['GET'])
@@ -52,6 +52,27 @@ def get_extincao():
         extincao.append(especie['Categoria_de_risco_de_extinção_'])
     under_extincao = [s.replace(' ', '') for s in extincao]
     return Counter(under_extincao)
+
+
+# @app.route('/api/bd_museu_goeldi/extincao/<param>', methods=['GET'])
+# def get_extincao(param):
+#     bacias = [item["Espécie"] for item in t if item["Bacia"] == param]
+#     return Counter(under_extincao)
+
+
+@app.route('/api/bd_museu_goeldi/ameaca', methods=['GET'])
+def get_ameaca():
+    ameaca = list()
+    for especie in t:
+        ameaca.append(especie['Ameaça_(resumida)'])
+    # under_ameaca = [s.replace(' ', '') for s in ameaca]
+    return ameaca
+
+
+@app.route('/api/bd_museu_goeldi/bacias/<param>')
+def get_ximgu(param):
+    bacias = [item["Espécie"] for item in t if item["Bacia"] == param]
+    return bacias
 
 
 if __name__ == '__main__':
